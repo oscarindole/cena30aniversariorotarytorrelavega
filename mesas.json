@@ -1,32 +1,32 @@
 {
   "evento": "Cena del 30 aniversario · Rotary Club de Torrelavega",
-  "fuente": "WhatsApp Image 2026-10-16 at 12.03.39 (98 asistentes); acompañantes con nombre tomados de la lista anterior",
+  "fuente": "WhatsApp Image 2026-10-16 at 12.03.39, tal cual (solo tildes y un espacio corregidos; sin filas «Pendiente»)",
   "mesas": [
     {
       "numero": 1,
       "nombre": "Presidencial",
       "entradas": [
-        "Edu Pesquera y María",
+        "Edu Pesquera (2)",
         "Delegado del Gobierno",
-        "Sara Izquierdo (Alcaldesa de Santillana)",
-        "Pedro Pérez Noriega (Teniente de Alcalde de Torrelavega)",
-        "Isabel Urrutia (Consejera de Presidencia)",
+        "Sara Izquierdo-Alcaldesa Santillana",
+        "Pedro Pérez Noriega - TTE Torrelavega",
+        "Isabel Urrutia Consejera de Presidencia",
         "Gobernador",
-        "Pere Calviño y Sra. (Secretario Distrital)",
-        "Manuel Herreros (Past Gobernador)",
-        "Benito Saínz Cotera y Araceli (Past Gobernador)",
+        "Secretario Distrital: Pere Calviño (2)",
+        "Past Gobernador Manuel Herreros",
+        "Past Gobernador Benito Saínz Cotera (2)",
         "Luis Salcines"
       ]
     },
     {
       "numero": 2,
       "entradas": [
-        "Lole y Eva",
-        "Poldo Pérez y Carmen",
-        "M. Ángel y Manoli",
-        "Luis Santos y Rosi",
-        "M. Ángel (Sacerdote)",
-        "AMARA Cantabria (2 personas)"
+        "Lole (2)",
+        "Poldo Pérez (2)",
+        "M. Ángel (2)",
+        "Luis Santos (2)",
+        "M. Ángel",
+        "AMARA Cantabria (2)"
       ]
     },
     {
@@ -34,9 +34,9 @@
       "entradas": [
         "Gemma",
         "Luis de Prada",
-        "Luis Gamazo y Makova",
-        "Pilar García Ross y Juan",
-        "Eugenio Villar y Xusa",
+        "Luis Gamazo (2)",
+        "Pilar García Ross (2)",
+        "Eugenio Villar (2)",
         "Almudena",
         "David de Diego"
       ]
@@ -45,58 +45,58 @@
       "numero": 4,
       "entradas": [
         "Antonio San Miguel",
-        "Felipe Coll y Sra.",
-        "Pablo de la Torre y Sra.",
-        "Manuel Martínez y Sra.",
-        "M. Ángel Ramos (Camargo)",
-        "Javier de la Hoz (Camargo)",
-        "Luis Castillo y Sra."
+        "Felipe Coll (2)",
+        "Pablo de la Torre (2)",
+        "Manuel Martínez (2)",
+        "M. Ángel Ramos",
+        "Javier de la Hoz",
+        "Luis Castillo (2)"
       ]
     },
     {
       "numero": 5,
       "entradas": [
         "Joaquín Blanco",
-        "Jesús Sáiz (Chuchi)",
+        "Jesús Sáiz",
         "Ángel Cristóbal",
-        "Teniente de Alcalde de Santillana del Mar",
-        "Juanjo Alonso (PP Regional)",
-        "Miguel Ángel Vargas (PP Torrelavega)",
-        "Carmen Olarreaga, Fran e hija",
-        "María Fernández (hija de Julio)",
-        "Antonio (Toño) Rincón y esposa"
+        "TTE Alcalde Santillana del Mar",
+        "Juanjo Alonso",
+        "Miguel Ángel Vargas",
+        "Carmen Olarreaga (3)",
+        "María Fernández",
+        "Antonio Rincón (2)"
       ]
     },
     {
       "numero": 6,
       "entradas": [
-        "Julio Fernández y Pilar",
-        "Javier Crespo y Mª Jesús",
-        "Miguel Rincón y Paloma",
+        "Julio Fernández (2)",
+        "Javier Crespo (2)",
+        "Miguel Rincón (2)",
         "Tomás Castillo",
-        "José López Martínez y Ana",
-        "Blanca Rosa Gómez y acompañante",
-        "Manuel (Manolo) Torío"
+        "José López Martínez (2)",
+        "Blanca Rosa Gómez (2)",
+        "Manuel Torío"
       ]
     },
     {
       "numero": 7,
       "entradas": [
-        "Emilio Bedia y Romina",
-        "Javier Rodríguez y Ana",
-        "José Luis Olarreaga y Vicente Vega (Danzas Tanos)",
+        "Emilio Bedia (2)",
+        "Javier Rodríguez (2)",
+        "José Luis Olarreaga y Vicente Vega",
         "Tino San Pedro",
-        "Carlos Telnor y acompañante",
+        "Carlos Telnor (2)",
         "África"
       ]
     },
     {
       "numero": 8,
       "entradas": [
-        ["Óscar Deseco", "María M. Landaluce", "Berta Deseco"],
-        "Mercedes (Merche) Ortiz, Jaime y acompañantes",
+        "Óscar Deseco (3)",
+        "Mercedes Ortiz (3)",
         "Bob",
-        "María González y acompañante"
+        "María González (2)"
       ]
     },
     {
@@ -104,8 +104,8 @@
       "entradas": [
         "Juan Losada",
         "Quique Gutiérrez Aragón",
-        "Rotary Club Bahía Cantabria (3 personas)",
-        "Rotary Club Santander (4 personas)"
+        "RC Bahía Cantabria (3)",
+        "RC Santander (4)"
       ]
     }
   ]
