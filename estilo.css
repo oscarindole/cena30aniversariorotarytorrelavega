@@ -1,0 +1,469 @@
+/* ¿Cuál es mi mesa? · 30 aniversario Rotary Club de Torrelavega
+   Efecto cristal y esferas brillantes, en azul y oro Rotary.
+   Todo en rem: respeta el tamaño de letra que la persona tenga en su móvil. */
+
+@font-face { font-family: 'Atkinson Hyperlegible'; font-weight: 400; font-style: normal; font-display: swap; src: url(fuentes/atkinson-400.woff2) format('woff2'); }
+@font-face { font-family: 'Atkinson Hyperlegible'; font-weight: 700; font-style: normal; font-display: swap; src: url(fuentes/atkinson-700.woff2) format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 500 700; font-style: normal; font-display: swap; src: url(fuentes/cormorant.woff2) format('woff2'); }
+
+:root {
+  --azul: #17458F;          /* azul Rotary: blanco encima da 9,2:1 */
+  --azul-hondo: #0B2554;
+  --azul-claro: #3F78CF;
+  --oro: #F7A81B;           /* oro Rotary: solo en tamaños grandes, filetes y brillos */
+  --oro-claro: #FFD36B;
+  --blanco: #FFFFFF;
+  --tinta: #0B1F45;         /* texto sobre blanco y sobre oro */
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--azul-hondo); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 85% 12%, rgba(111, 160, 234, 0.55) 0, rgba(111, 160, 234, 0) 32%),
+    radial-gradient(circle at 8% 48%, rgba(247, 168, 27, 0.22) 0, rgba(247, 168, 27, 0) 30%),
+    radial-gradient(circle at 92% 78%, rgba(63, 120, 207, 0.45) 0, rgba(63, 120, 207, 0) 34%),
+    radial-gradient(circle at 20% 95%, rgba(247, 168, 27, 0.16) 0, rgba(247, 168, 27, 0) 28%),
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(63, 120, 207, 0.55) 0%, rgba(63, 120, 207, 0) 70%),
+    linear-gradient(180deg, var(--azul) 0%, var(--azul-hondo) 100%);
+  background-attachment: fixed;
+  color: var(--blanco);
+  font-family: var(--sans);
+  font-size: 1.25rem;        /* 20 px */
+  line-height: 1.45;
+  padding: 0.625rem;
+  padding: max(0.625rem, env(safe-area-inset-top)) max(0.625rem, env(safe-area-inset-right)) max(0.625rem, env(safe-area-inset-bottom)) max(0.625rem, env(safe-area-inset-left));
+}
+[hidden] { display: none !important; }
+.solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Marco protocolario: filete de oro por fuera, cristal fino por dentro */
+.marco {
+  min-height: calc(100vh - 1.25rem);
+  min-height: calc(100dvh - 1.25rem);
+  max-width: 40rem;
+  margin: 0 auto;
+  border: 2px solid var(--oro);
+  outline: 1px solid rgba(255, 255, 255, 0.45);
+  outline-offset: -7px;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 40%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 24px rgba(247, 168, 27, 0.18);
+  padding: 1.5rem 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+.vista { flex: 1; display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* ── Cristal: el efecto de la referencia ──
+   Panel translúcido con canto biselado, brillo arriba, luz en los laterales y doble reflejo en diagonal.
+   Detrás del texto el blanco no pasa del 18 %, para mantener el contraste por encima de 7:1. */
+.cristal, .tarjeta, .boton-secundario, .sin-resultados, .mesa-lista, .todas-mesa {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 48%, rgba(255, 255, 255, 0.03) 52%, rgba(255, 255, 255, 0.09) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 1.25rem;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.95),           /* canto superior encendido */
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35),            /* canto inferior */
+    inset 0 0 0 4px rgba(255, 255, 255, 0.07),           /* grosor del vidrio */
+    inset 3px 0 10px -4px rgba(255, 255, 255, 0.8),      /* luz lateral izquierda */
+    inset -3px 0 10px -4px rgba(255, 255, 255, 0.8),     /* luz lateral derecha */
+    inset 0 -18px 24px -18px rgba(111, 160, 234, 0.6),   /* rebote de luz abajo */
+    0 1px 0 rgba(255, 255, 255, 0.25),
+    0 14px 34px rgba(3, 14, 38, 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+}
+/* Brillo de la mitad superior, como un vidrio pulido */
+.cristal::before, .tarjeta::before, .boton-secundario::before, .sin-resultados::before, .mesa-lista::before, .todas-mesa::before {
+  content: '';
+  position: absolute;
+  left: 3px; right: 3px; top: 3px;
+  height: 46%;
+  max-height: 7rem;
+  border-radius: 1.1rem 1.1rem 50% 50% / 1.1rem 1.1rem 1.25rem 1.25rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.04) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+/* Doble reflejo en diagonal */
+.cristal::after, .tarjeta::after, .boton-secundario::after, .sin-resultados::after, .mesa-lista::after, .todas-mesa::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(112deg,
+    rgba(255, 255, 255, 0) 0 56%,
+    rgba(255, 255, 255, 0.16) 56% 64%,
+    rgba(255, 255, 255, 0) 64% 67%,
+    rgba(255, 255, 255, 0.10) 67% 69%,
+    rgba(255, 255, 255, 0) 69%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ── Esfera brillante: azul Rotary con canto de oro y reflejo ── */
+.esfera, .mini-esfera {
+  position: relative;
+  isolation: isolate;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #6FA0EA 0%, var(--azul-claro) 22%, var(--azul) 55%, var(--azul-hondo) 100%);
+  box-shadow:
+    inset -0.5rem -0.6rem 1rem rgba(247, 168, 27, 0.85),
+    inset 0.3rem 0.3rem 0.8rem rgba(255, 255, 255, 0.35),
+    0 0 0 2px rgba(247, 168, 27, 0.55),
+    0 8px 22px rgba(0, 0, 0, 0.45);
+}
+.esfera::after, .mini-esfera::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 34% 22% at 34% 20%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(112deg, rgba(255, 255, 255, 0.22) 0 52%, rgba(255, 255, 255, 0) 52%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ── Cabecera ── */
+.cabecera { text-align: center; padding: 1.25rem 0 1rem; }
+.logo { display: block; width: 8.5rem; height: auto; margin: 0 auto 1.75rem; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35)); }
+.titulo {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--blanco);
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.subtitulo { margin: 0; font-size: 1.375rem; line-height: 1.4; font-weight: 700; color: var(--blanco); }
+
+.ornamento { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin: 1.5rem auto; width: 70%; }
+.ornamento span { flex: 1; height: 1px; background: var(--oro); }
+.ornamento i { width: 0.6rem; height: 0.6rem; background: var(--oro); transform: rotate(45deg); flex: none; box-shadow: 0 0 8px rgba(247, 168, 27, 0.8); }
+
+/* ── Campo y botones: 64 px mínimo, ancho completo, letra ≥ 22 px ── */
+.buscador { display: flex; flex-direction: column; gap: 1rem; }
+.campo {
+  width: 100%;
+  min-height: 4.5rem;
+  padding: 0.75rem 1rem;
+  font: 400 1.625rem/1.2 var(--sans);   /* 26 px */
+  text-align: center;
+  color: var(--tinta);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4F7FD 50%, #E6EDF9 51%, #F2F6FC 100%);
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  border-radius: 1.25rem;
+  box-shadow:
+    inset 0 2px 6px rgba(11, 37, 84, 0.22),
+    0 0 0 4px rgba(255, 255, 255, 0.18),
+    0 10px 26px rgba(3, 14, 38, 0.45);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.campo::placeholder { color: #44506A; opacity: 1; }   /* 7,7:1 */
+.campo:focus { outline: 3px solid var(--oro); outline-offset: 3px; }
+
+.boton {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 4rem;
+  padding: 0.75rem 1rem;
+  font: 700 1.375rem/1.2 var(--sans);   /* 22 px */
+  border-radius: 1.125rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* Principal: oro brillante, como las esferas de la referencia */
+.boton-principal {
+  overflow: hidden;
+  color: var(--tinta);                  /* 8,6:1 sobre el oro */
+  background: linear-gradient(180deg, #FFE29A 0%, var(--oro-claro) 30%, var(--oro) 50%, #EE9A00 51%, #F7B53A 100%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 1.25rem;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -4px 10px rgba(160, 90, 0, 0.35),
+    inset 3px 0 8px -4px rgba(255, 255, 255, 0.8),
+    inset -3px 0 8px -4px rgba(255, 255, 255, 0.8),
+    0 0 0 4px rgba(247, 168, 27, 0.18),
+    0 12px 26px rgba(3, 14, 38, 0.5);
+}
+.boton-principal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(112deg, rgba(255, 255, 255, 0) 0 60%, rgba(255, 255, 255, 0.22) 60% 67%, rgba(255, 255, 255, 0) 67%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.boton-secundario { color: var(--blanco); }
+.boton:active, .tarjeta:active { transform: translateY(1px); filter: brightness(0.95); }
+.boton:focus-visible { outline: 3px solid var(--oro); outline-offset: 3px; }
+
+/* ── Resultados ── */
+.aviso { margin: 0; font-weight: 700; text-align: center; }
+.aviso:empty { display: none; }
+.resultados { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.875rem; }
+.tarjeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 4.5rem;
+  padding: 0.875rem 0.875rem 0.875rem 1.125rem;
+  text-align: left;
+  color: var(--blanco);
+  font: 700 1.5rem/1.25 var(--sans);   /* 24 px */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.tarjeta:focus-visible { outline: 3px solid var(--oro); outline-offset: 3px; }
+.tarjeta-nombre { flex: 1; overflow-wrap: anywhere; position: relative; z-index: 1; white-space: pre-line; }
+.tarjeta-mesa { flex: none; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; position: relative; z-index: 1; }
+.mini-rotulo { font-size: 1rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+.mini-esfera {
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  background: radial-gradient(circle at 50% 50%, #061A3D 0%, #061A3D 62%, var(--azul) 72%, var(--azul-claro) 100%);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 3.5rem;
+  line-height: 1;
+  font-variant-numeric: lining-nums;
+  color: #FFC933;
+  text-shadow: none;
+  box-shadow:
+    inset -0.25rem -0.3rem 0.5rem rgba(247, 168, 27, 0.85),
+    inset 0.15rem 0.15rem 0.4rem rgba(255, 255, 255, 0.35),
+    0 0 0 1.5px rgba(247, 168, 27, 0.6),
+    0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.sin-resultados { padding: 1rem 1.125rem; font-size: 1.375rem; font-weight: 700; }
+.sin-resultados p { margin: 0; position: relative; }
+.ver-todas { margin-top: auto; }
+
+/* ── Vista de una mesa ── */
+.vista-mesa { text-align: center; }
+.mesa-bloque { padding: 1.25rem 1rem 1.5rem; }
+.mesa-rotulo { margin: 0 0 1rem; font-weight: 700; font-size: 1.75rem; letter-spacing: 0.3em; padding-left: 0.3em; color: var(--blanco); position: relative; }
+.esfera { width: min(96%, 26rem); aspect-ratio: 1; margin: 0 auto; display: grid; place-items: center; }
+.nucleo {
+  width: 86%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #061A3D;       /* liso y muy oscuro: máximo contraste para la cifra */
+  box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  position: relative;
+  z-index: 1;
+}
+.mesa-numero {
+  margin: 0;
+  font-family: var(--sans);  /* trazo grueso y cifras claras: se lee mejor que la serif */
+  font-weight: 700;
+  font-size: 16rem;          /* 256 px */
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #FFC933;            /* oro vivo: 12:1 sobre el núcleo */
+  text-shadow: none;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.mesa-nombre { margin: 1rem 0 0; font-family: var(--serif); font-weight: 600; font-size: 2.5rem; line-height: 1.1; color: var(--oro); position: relative; }
+.bienvenida {
+  margin: 0.25rem 0 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 2.75rem;
+  line-height: 1.1;
+  color: var(--blanco);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.mesa-companeros-titulo { margin: 0; font-size: 1.375rem; color: var(--blanco); }
+.mesa-lista, .todas-mesa ul { list-style: none; margin: 0; padding: 0; text-align: left; }
+.mesa-lista { padding: 0.25rem 0.75rem; }
+.mesa-lista li, .todas-mesa li {
+  position: relative;
+  padding: 0.75rem 0.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 1.375rem;
+  line-height: 1.3;
+  white-space: pre-line;
+}
+.mesa-lista li:last-child, .todas-mesa li:last-child { border-bottom: 0; }
+.mesa-lista li.suya {
+  font-weight: 700;
+  color: var(--blanco);
+  background: rgba(247, 168, 27, 0.16);
+  border-left: 0.375rem solid var(--oro);
+  border-radius: 0.375rem;
+  padding-left: 0.75rem;
+  margin: 0.25rem 0;
+}
+.vista-mesa .boton-principal { margin-top: auto; }
+
+/* ── Todas las mesas ── */
+.todas-lista { display: flex; flex-direction: column; gap: 1rem; }
+.todas-mesa { padding: 1rem 1rem 0.5rem; }
+.todas-mesa h3 {
+  position: relative;
+  margin: 0 0 0.25rem;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  color: var(--oro);
+  font-variant-numeric: lining-nums;
+  border-bottom: 1px solid rgba(247, 168, 27, 0.6);
+  padding-bottom: 0.25rem;
+}
+.todas-mesa h3 { display: flex; align-items: center; gap: 0.75rem; padding-bottom: 0.5rem; }
+.todas-mesa h3 .h3-rotulo { font-family: var(--sans); font-weight: 700; font-size: 1.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blanco); }
+.todas-mesa h3 small { font-size: 1.75rem; color: var(--oro); }
+
+/* ── Pie ── */
+.pie { text-align: center; padding-top: 2.5rem; padding-bottom: 0.5rem; }
+.logo-pie { display: block; width: 90%; max-width: 20rem; height: auto; margin: 0 auto; }
+
+/* Sin desenfoque donde el móvil no lo soporte: el cristal se queda translúcido igual */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .cristal, .tarjeta, .boton-secundario, .sin-resultados, .mesa-lista, .todas-mesa { background-color: rgba(23, 69, 143, 0.6); }
+}
+
+/* Letra blanca sobre cristal: una sombra fina la mantiene legible donde cruza el reflejo */
+.tarjeta, .boton-secundario, .sin-resultados, .mesa-lista li, .todas-mesa li, .todas-mesa h3, .mesa-rotulo, .subtitulo, .aviso {
+  text-shadow: 0 1px 2px rgba(3, 14, 38, 0.75), 0 0 1px rgba(3, 14, 38, 0.6);
+}
+
+
+/* ── Bienvenida al entrar ──────────────────────────────────────────
+   Lenta y sin parpadeos: cada pieza entra con un fundido de 0,8 a 1,6 s. */
+html.con-intro, html.con-intro body { overflow: hidden; }
+.bienvenida-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem max(2rem, env(safe-area-inset-bottom));
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(63, 120, 207, 0.65) 0%, rgba(23, 69, 143, 0.35) 38%, rgba(11, 37, 84, 0) 70%),
+    linear-gradient(180deg, var(--azul) 0%, var(--azul-hondo) 100%);
+  cursor: pointer;
+  transition: opacity 0.9s ease, transform 0.9s ease, filter 0.9s ease;
+  animation: intro-retirada 0.9s ease 7s forwards;   /* red de seguridad si el JavaScript no llega */
+}
+.bienvenida-intro.saliendo { opacity: 0; transform: scale(1.04); filter: blur(6px); pointer-events: none; }
+.bienvenida-intro[hidden] { display: none !important; }
+
+/* Luz que barre el fondo como un reflejo sobre cristal */
+.intro-luz {
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(112deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.10) 48%, rgba(255, 255, 255, 0) 56%);
+  animation: intro-barrido 3.2s ease-in-out 0.6s both;
+  pointer-events: none;
+}
+.intro-centro { position: relative; display: flex; flex-direction: column; align-items: center; }
+
+.intro-rueda { position: relative; width: 11rem; height: 11rem; }
+.intro-rueda img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45));
+  animation: intro-rueda 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+.intro-halo {
+  position: absolute;
+  inset: -35%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(247, 168, 27, 0.45) 0%, rgba(247, 168, 27, 0.12) 40%, rgba(247, 168, 27, 0) 68%);
+  animation: intro-halo 2.6s ease-out 0.6s both;
+}
+/* Destello de cristal que cruza la rueda cuando se asienta */
+.intro-destello {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  -webkit-mask: url(img/rueda-rotary.svg) center / contain no-repeat;
+  mask: url(img/rueda-rotary.svg) center / contain no-repeat;
+  background: linear-gradient(112deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 65%) -150% 0 / 250% 100% no-repeat;
+  animation: intro-destello 1.4s ease-in-out 2.1s both;
+}
+
+.intro-palabra { width: 9.5rem; height: auto; margin-top: 1.25rem; animation: intro-sube 1.2s ease-out 1.5s both; }
+
+.intro-filete { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 15rem; margin: 1.5rem auto 1.25rem; }
+.intro-filete span { flex: 1; height: 1px; background: var(--oro); transform-origin: center; animation: intro-filete 1.1s ease-out 2.1s both; }
+.intro-filete span:first-child { transform-origin: right; }
+.intro-filete span:last-child { transform-origin: left; }
+.intro-filete i { width: 0.6rem; height: 0.6rem; background: var(--oro); transform: rotate(45deg); box-shadow: 0 0 10px rgba(247, 168, 27, 0.9); animation: intro-rombo 0.8s ease-out 2.0s both; }
+
+.intro-frase {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  color: var(--blanco);
+  text-wrap: balance;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+.intro-f1, .intro-f2 { display: inline-block; }
+.intro-f1 { animation: intro-frase 1.4s ease-out 2.5s both; }
+.intro-f2 { color: var(--oro-claro); animation: intro-frase 1.4s ease-out 3.1s both; }
+.intro-club { margin: 1.25rem 0 0; font-size: 1.125rem; font-weight: 700; letter-spacing: 0.04em; color: var(--blanco); opacity: 0.92; animation: intro-sube 1s ease-out 3.7s both; }
+
+.intro-entrar { position: absolute; left: 1.25rem; right: 1.25rem; bottom: max(1.5rem, env(safe-area-inset-bottom)); width: auto; max-width: 30rem; margin: 0 auto; animation: intro-sube 0.8s ease-out 1.8s both; }
+
+@keyframes intro-rueda {
+  from { opacity: 0; transform: rotate(-200deg) scale(0.55); }
+  60%  { opacity: 1; }
+  to   { opacity: 1; transform: rotate(0) scale(1); }
+}
+@keyframes intro-halo {
+  0%   { opacity: 0; transform: scale(0.6); }
+  50%  { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 0.75; transform: scale(1); }
+}
+@keyframes intro-destello { from { background-position: -150% 0; } to { background-position: 250% 0; } }
+@keyframes intro-barrido { from { transform: translateX(-60%); opacity: 0; } 30% { opacity: 1; } to { transform: translateX(60%); opacity: 0; } }
+@keyframes intro-retirada { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+@keyframes intro-sube { from { opacity: 0; transform: translateY(0.75rem); } to { opacity: 1; transform: none; } }
+@keyframes intro-filete { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes intro-rombo { from { opacity: 0; transform: rotate(45deg) scale(0); } to { opacity: 1; transform: rotate(45deg) scale(1); } }
+@keyframes intro-frase {
+  from { opacity: 0; transform: translateY(0.5rem) scale(0.96); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* Con «reducir movimiento»: todo aparece con un fundido, sin giros ni barridos */
+@media (prefers-reduced-motion: reduce) {
+  .bienvenida-intro *, .bienvenida-intro *::before, .bienvenida-intro *::after { animation: intro-quieto 0.6s ease-out both !important; }
+  .intro-luz, .intro-destello { display: none; }
+  @keyframes intro-quieto { from { opacity: 0; } to { opacity: 1; } }
+}

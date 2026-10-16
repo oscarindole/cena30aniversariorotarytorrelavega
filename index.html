@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Cuál es mi mesa? · 30 aniversario Rotary Club de Torrelavega</title>
+<meta name="description" content="Busque su nombre para encontrar su mesa en la cena del 30 aniversario del Rotary Club de Torrelavega.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://oscarindole.github.io/cena30aniversariorotarytorrelavega/">
+<meta property="og:title" content="Busca tu mesa · 30 aniversario Rotary Club de Torrelavega">
+<meta property="og:description" content="Escribe tu nombre y verás tu número de mesa.">
+<meta property="og:image" content="https://oscarindole.github.io/cena30aniversariorotarytorrelavega/img/compartir.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rueda de Rotary y el texto «Busca tu mesa» en amarillo sobre fondo azul">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0F3170">
+<meta name="format-detection" content="telephone=no">
+<link rel="preload" href="fuentes/atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/cormorant.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilo.css?v=13">
+</head>
+<body>
+<!-- Bienvenida: se ve al entrar y se funde sola; tocar la salta -->
+<div id="bienvenida" class="bienvenida-intro" role="dialog" aria-label="Bienvenida">
+  <div class="intro-luz" aria-hidden="true"></div>
+  <div class="intro-centro">
+    <div class="intro-rueda">
+      <span class="intro-halo" aria-hidden="true"></span>
+      <img src="img/rueda-rotary.svg" alt="" width="200" height="200">
+      <span class="intro-destello" aria-hidden="true"></span>
+    </div>
+    <img class="intro-palabra" src="img/rotary-palabra-blanco.svg" alt="Rotary" width="220" height="70">
+    <div class="intro-filete" aria-hidden="true"><span></span><i></i><span></span></div>
+    <p class="intro-frase"><span class="intro-f1">Dar de sí,</span> <span class="intro-f2">antes de pensar en sí</span></p>
+    <p class="intro-club">Rotary Club de Torrelavega<br>30 aniversario</p>
+  </div>
+  <button type="button" class="boton boton-secundario intro-entrar">Entrar</button>
+</div>
+<script>try{if(sessionStorage.getItem('bienvenida-vista')==='1')document.getElementById('bienvenida').hidden=true;else document.documentElement.classList.add('con-intro')}catch(e){}</script>
+<div class="marco">
+
+  <!-- ── Búsqueda ─────────────────────────────────────────────── -->
+  <main id="vista-buscar" class="vista">
+    <header class="cabecera">
+      <img class="logo" src="img/rotary-vertical-blanco.svg" alt="Rotary" width="220" height="255">
+      <h1 class="titulo">Celebramos el 30 aniversario de nuestro club Rotary de Torrelavega</h1>
+      <div class="ornamento" aria-hidden="true"><span></span><i></i><span></span></div>
+      <p class="subtitulo">Busque su nombre<br>para encontrar su mesa</p>
+    </header>
+
+    <form id="formulario" class="buscador" role="search" autocomplete="off">
+      <label for="campo" class="solo-lector">Su nombre</label>
+      <input id="campo" class="campo" type="text" name="nombre"
+        placeholder="Escriba su nombre…" autofocus
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+        inputmode="text" enterkeyhint="search">
+      <button type="submit" class="boton boton-principal">Buscar mi mesa</button>
+      <button type="button" id="borrar" class="boton boton-secundario" hidden>Borrar</button>
+    </form>
+
+    <p id="aviso" class="aviso" aria-live="polite"></p>
+    <ul id="resultados" class="resultados"></ul>
+
+    <div id="sin-resultados" class="sin-resultados" hidden>
+      <p>No encontramos ese nombre. Pruebe solo con el nombre o el apellido, o pregunte en la entrada.</p>
+    </div>
+
+    <button type="button" class="boton boton-secundario ver-todas" data-ir="todas">Ver todas las mesas</button>
+  </main>
+
+  <!-- ── Una mesa ─────────────────────────────────────────────── -->
+  <section id="vista-mesa" class="vista vista-mesa" hidden aria-labelledby="mesa-numero">
+    <button type="button" class="boton boton-secundario" data-ir="buscar">Volver al inicio</button>
+    <div class="mesa-bloque cristal">
+      <p class="mesa-rotulo">MESA</p>
+      <div class="esfera"><div class="nucleo"><p id="mesa-numero" class="mesa-numero"></p></div></div>
+      <p id="mesa-nombre" class="mesa-nombre" hidden>Presidencial</p>
+    </div>
+    <p class="bienvenida">Sé bienvenido/a</p>
+    <div class="ornamento" aria-hidden="true"><span></span><i></i><span></span></div>
+    <h2 class="mesa-companeros-titulo">En esta mesa</h2>
+    <ul id="mesa-lista" class="mesa-lista"></ul>
+    <button type="button" class="boton boton-principal" data-ir="buscar">Buscar otro nombre</button>
+  </section>
+
+  <!-- ── Todas las mesas ──────────────────────────────────────── -->
+  <section id="vista-todas" class="vista" hidden aria-labelledby="todas-titulo">
+    <h2 id="todas-titulo" class="titulo">Todas las mesas</h2>
+    <div class="ornamento" aria-hidden="true"><span></span><i></i><span></span></div>
+    <button type="button" class="boton boton-secundario" data-ir="buscar">Volver al inicio</button>
+    <div id="todas-lista" class="todas-lista"></div>
+    <button type="button" class="boton boton-principal" data-ir="buscar">Buscar mi nombre</button>
+  </section>
+
+  <footer class="pie">
+    <img class="logo-pie" src="img/logo-30-pie-blanco.png" alt="30 aniversario · Rotary Club Torrelavega · Distrito 2202" width="1200" height="462">
+  </footer>
+</div>
+
+<noscript><p class="aviso">Para buscar su mesa, active JavaScript o pregunte en la entrada.</p></noscript>
+<script src="app.js?v=6"></script>
+</body>
+</html>
